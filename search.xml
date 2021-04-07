@@ -386,11 +386,11 @@
       
         <tags>
             
-            <tag> 构造 </tag>
-            
             <tag> Solo </tag>
             
             <tag> 交互 </tag>
+            
+            <tag> 构造 </tag>
             
         </tags>
       
@@ -775,9 +775,9 @@
             
             <tag> 前端 </tag>
             
-            <tag> 美术 </tag>
-            
             <tag> 工程 </tag>
+            
+            <tag> 美术 </tag>
             
             <tag> 我 </tag>
             
@@ -810,6 +810,10 @@
       
         <tags>
             
+            <tag> Solo </tag>
+            
+            <tag> 构造 </tag>
+            
             <tag> 博弈 </tag>
             
             <tag> bfs </tag>
@@ -817,10 +821,6 @@
             <tag> 层级图 </tag>
             
             <tag> 生成树 </tag>
-            
-            <tag> 构造 </tag>
-            
-            <tag> Solo </tag>
             
         </tags>
       
