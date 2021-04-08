@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>qwqbot | qwqbot</title><meta name="author" content="qwqbot"><meta name="copyright" content="qwqbot"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2.Instructions: Language of the Computer  这章介绍了MIPs汇编语言.  手册   操作数    指令集  大部分操作都是三个操作数. 除了 lui, j, jr 和 jal.   操作数   寄存器 MIPS 中有32个寄存器. 满足了大部分时候的使用需求, 也有着很高的效率. 如果寄存器数量太多.    A very large number of r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qwqbot">
+<meta property="og:url" content="http://qwqbot.com/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/Computer-Organization-and-Design/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/Computer%20Organization%20and%20Design/2-%20Instructions%20Language%20of%20the%20Computer/index.html">
+<meta property="og:site_name" content="qwqbot">
+<meta property="og:description" content="2.Instructions: Language of the Computer  这章介绍了MIPs汇编语言.  手册   操作数    指令集  大部分操作都是三个操作数. 除了 lui, j, jr 和 jal.   操作数   寄存器 MIPS 中有32个寄存器. 满足了大部分时候的使用需求, 也有着很高的效率. 如果寄存器数量太多.    A very large number of r">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-25T02:24:26.893Z">
+<meta property="article:modified_time" content="2021-04-08T07:18:42.332Z">
+<meta property="article:author" content="qwqbot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/qwq_circle2.jpg"><link rel="canonical" href="http://qwqbot.com/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/Computer-Organization-and-Design/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/Computer%20Organization%20and%20Design/2-%20Instructions%20Language%20of%20the%20Computer/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-04-08 15:18:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/qwq_circle2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">qwqbot</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-25T02:24:26.893Z" title="发表于 2021-03-25 10:24:26">2021-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-08T07:18:42.332Z" title="更新于 2021-04-08 15:18:42">2021-04-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/">CS0804n</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/Computer-Organization-and-Design/">Computer Organization and Design</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="2-Instructions-Language-of-the-Computer">2.Instructions: Language of the Computer</h2>
+<blockquote>
+<p>这章介绍了MIPs汇编语言.</p>
+</blockquote>
+<h3 id="手册">手册</h3>
+<ul>
+<li>
+<p>操作数</p>
+<p><img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325102640180.png" alt="image-20210325102640180"></p>
+</li>
+<li>
+<p>指令集</p>
+<p><img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325102610177.png" alt="image-20210325102610177"></p>
+<p>大部分操作都是三个操作数. 除了 lui, j, jr 和 jal.</p>
+</li>
+</ul>
+<h3 id="操作数">操作数</h3>
+<ol>
+<li>
+<p>寄存器</p>
+<p>MIPS 中有32个寄存器. 满足了大部分时候的使用需求, 也有着很高的效率.</p>
+<p>如果寄存器数量太多.</p>
+</li>
+</ol>
+<blockquote>
+<p>A very large number of registers may increase the clock cycle time simply because it takes electronic signals longer when they must travel farther.</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>memory</p>
+<p>memory的单位为byte. 即每个内存地址代表了8个bit.  但我们使用的时候一般使用word = 32bit. 所以memory的寻址要乘4.</p>
+</li>
+<li>
+<p>Constant</p>
+<p>常量.</p>
+</li>
+</ol>
+<h3 id="Signed-and-Unsigned">Signed and Unsigned</h3>
+<p>首先明确一个概念, 在内存中存储的数只是0101的二进制序列, 没有符号之说. 只是人按照所规定的规则, 把一个数解读成正数或者负数.</p>
+<p>符号数在内存中使用Two’s complement表示. 即 用  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span> 模<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span> 的逆表示<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">-x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal">x</span></span></span></span>.  范围<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><msup><mn>2</mn><mn>31</mn></msup><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mo>−</mo><msup><mn>2</mn><mn>31</mn></msup><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[2^{31}-1,-2^{31}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span></p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325104428868.png" alt="image-20210325104428868" style="zoom:50%;" />
+<p>给出一个二进制, 计算其对应的值.</p>
+<p><img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325104737144.png" alt="image-20210325104737144"></p>
+<ul>
+<li>
+<p>快速转换正负数.</p>
+<p>把一个数取反加1的二进制表示即为他的相反数的二进制表示.</p>
+<p>这是因为, 一个数模 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>32</mn></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span> 的逆就是它的取反加1.(把0全补了然后加1).</p>
+</li>
+<li>
+<p>符号扩充</p>
+<p>当要把一个小的单位, 如 byte 载入大的 单位, 如 word中. 如果是有符号载入的话, 正数要在前面补0, 负数要在前面补1.</p>
+</li>
+</ul>
+<h3 id="机器码">机器码</h3>
+<p>MIPS的指令有三种类型, 对应着三种不同的机器码格式.</p>
+<ol>
+<li>
+<p>R format:</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325105711478.png" alt="image-20210325105711478" style="zoom:50%;" />
+</li>
+<li>
+<p>I format:</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325105844387.png" alt="image-20210325105844387" style="zoom:50%;" />
+<p>因为R format中 rd 只有5位太小了. 所以I format中把其扩充为了16位.</p>
+<p>注意这里的表示是有符号的</p>
+<p>计算机使用 op 的值来区别I format 和 R format.</p>
+</li>
+</ol>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210325110156329.png" alt="image-20210325110156329" style="zoom:50%;" />
+<p>移位机器码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sll $t2, $s0, 4 # $t2 &#x3D; $s0 &lt;&lt; 4</span><br></pre></td></tr></table></figure>
+<p>的机器码为</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210408102847047.png" alt="image-20210408102847047" style="zoom:50%;" />
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>o</mi><mi>r</mi><mo stretchy="false">(</mo><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mi>o</mi><mi>t</mi><mo stretchy="false">(</mo><mi>A</mi><mi mathvariant="normal">∣</mi><mi>B</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">nor (A,B) = not(A|B)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span></span></span></span></p>
+<h3 id="Decision-making">Decision making</h3>
+<h4 id="branch">branch</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">beq register 1, register 2, L1 		    # branch L1 if r1 &#x3D;&#x3D; r2</span><br><span class="line">bne register 1, register 2, L1 		    # branch L1 if r1 !&#x3D; r2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>条件判断</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(x == y):</span><br><span class="line">	<span class="keyword">do</span> a</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="keyword">do</span> b</span><br></pre></td></tr></table></figure>
+<p>汇编</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bne x,y, ELSE</span><br><span class="line">	do a</span><br><span class="line">	j EXIT</span><br><span class="line">Else:</span><br><span class="line">	do b</span><br><span class="line">Exit:</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li>
+<p>循环</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(save[i] == k)</span><br><span class="line">    i += <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>​	汇编版本.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 假设  i:$s3   k:$s5   save:$s6 </span><br><span class="line">Loop:</span><br><span class="line">	sll $t1,$s3,2     # $t1 &#x3D; i &lt;&lt; 4</span><br><span class="line">	add $t1,$t1,$s6   # $t1 &#x3D; &amp;(save[i])     </span><br><span class="line">	lw $t0, 0($t1)    # $t0 &#x3D; save[i]</span><br><span class="line">	bne $t0,$s5, Exit # if save[i] !&#x3D; k, jmp Exit</span><br><span class="line">	addi $s3,$s3,1    # i &#x3D; i + 1</span><br><span class="line">	j Loop</span><br><span class="line">Exit:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Comparison">Comparison</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">slt register 0, register 1, register 2  # r0 &#x3D; 1 if r1 &lt; r2</span><br><span class="line">slti register 0, register 1, constant</span><br><span class="line">sltu register 0, register 1, register 2 # unsinged version r0 &#x3D; 1 if r1 &lt; r2</span><br><span class="line">sltiu register 0, register 1, constant</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>判断数组越界</p>
+<p>把一个有符号数当成无符号数做 unsigned comparsion, 它就相当于一个很大很大的正数. 这样可以方便做数组越界判断.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># $s1:length    $t2:index</span><br><span class="line">sltu $t0, $t2, $s1    # $t0 &#x3D; 0 if (index &gt;&#x3D; length or index &lt; 0) </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="procedure">procedure</h3>
+<ol>
+<li>传入参数</li>
+<li>把控制权交给procedure</li>
+<li>为procedure申请内存资源</li>
+<li>procedure工作</li>
+<li>把结果放在procedure的调用程序可以取到的地方</li>
+<li>把控制权交回调用程序</li>
+</ol>
+<ul>
+<li>
+<p>寄存器</p>
+<p>与procedure相关的有三种寄存器: 参数, 返回值, 返回地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$a0,$a1,$a2,$a3  # procedure传参</span><br><span class="line">$v0,$v1          # 存储返回值</span><br><span class="line">$ra              # 存储caller地址</span><br></pre></td></tr></table></figure>
+<p>为了调用/返回一个procedure, 需要两个指令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jal ProcedureAddress # 保存下一条指令的地址,即PC+4,到$ra寄存器中, 并跳转到ProcedureAddress</span><br><span class="line">jr $ra               # 在Procedure的最后, 跳转回caller.</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leaf_example</span><span class="params">(<span class="keyword">int</span> g,<span class="keyword">int</span> h, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f;</span><br><span class="line">    f = (g + h) - (i + j);</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># $a0:g   $a1:h   $a2:i   $a3:j</span><br><span class="line"># $s0:f</span><br><span class="line">leaf_example:</span><br><span class="line">	addi $sp,$sp, -12 # make room to save register</span><br><span class="line">	sw   $t1,8($sp)   # 保存旧寄存器的值</span><br><span class="line">	sw   $t0,4($sp)</span><br><span class="line">	sw   $s0,0($sp)</span><br><span class="line">	</span><br><span class="line">	add $t0,$a0,$a1</span><br><span class="line">	add $t1,$a2,$a3</span><br><span class="line">	add $s0,$t1,$t2</span><br><span class="line">	</span><br><span class="line">	add $v0,$s0,$zero # 保存到</span><br><span class="line">	</span><br><span class="line">	lw	$t1,8($sp)    # 恢复寄存器的值</span><br><span class="line">	lw	$t0,4($sp)</span><br><span class="line">	lw	$s0,0($sp)</span><br><span class="line">	addi $sp,$sp,12   #更新栈顶指针</span><br><span class="line">	</span><br><span class="line">	jr $ra			  # 返回caller</span><br></pre></td></tr></table></figure>
+<p>通过上面的代码看到, 如果每次都保存要使用的寄存器的值, 会增加不少开销.</p>
+<p>于是在MIPS中规定</p>
+<ul>
+<li>$t0–$t9   :  temporary registers that are not preserved by the callee (called procedure) on a procedure call</li>
+<li>$s0–$s7  :  saved registers that <strong>must be preserved on a procedure call</strong> (if used, the callee saves and restores them)</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/qwq_circle2.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">qwqbot</div><div class="author-info__description">CS-ACM-MUSIC-REANGDING-MOVIE</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/pwqbot"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Instructions-Language-of-the-Computer"><span class="toc-text">2.Instructions: Language of the Computer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%86%8C"><span class="toc-text">手册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="toc-text">操作数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signed-and-Unsigned"><span class="toc-text">Signed and Unsigned</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="toc-text">机器码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision-making"><span class="toc-text">Decision making</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#branch"><span class="toc-text">branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison"><span class="toc-text">Comparison</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#procedure"><span class="toc-text">procedure</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: #D5F3F4"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By qwqbot</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', '', 'katex-wrap')
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
