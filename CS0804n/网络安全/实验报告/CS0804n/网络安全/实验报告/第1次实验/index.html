@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>qwqbot | qwqbot</title><meta name="author" content="qwqbot"><meta name="copyright" content="qwqbot"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DES&#x2F;3DES 演示实验报告 10185300229 王鼎 一. 实验环境 1.操作系统 　　	操作机： Windows_7 　　	操作机默认用户名： administrator 密码：123456 2.实验工具 　　信息安全综合实验系统 二. 实验内容  了解DES&#x2F;3DES算法 了解DES&#x2F;3DES算法的实现方法 掌握DES&#x2F;3DES算法的原理及过程  DES算法 des算法为密码体制中的对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qwqbot">
+<meta property="og:url" content="http://qwqbot.com/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/%E7%AC%AC1%E6%AC%A1%E5%AE%9E%E9%AA%8C/index.html">
+<meta property="og:site_name" content="qwqbot">
+<meta property="og:description" content="DES&#x2F;3DES 演示实验报告 10185300229 王鼎 一. 实验环境 1.操作系统 　　	操作机： Windows_7 　　	操作机默认用户名： administrator 密码：123456 2.实验工具 　　信息安全综合实验系统 二. 实验内容  了解DES&#x2F;3DES算法 了解DES&#x2F;3DES算法的实现方法 掌握DES&#x2F;3DES算法的原理及过程  DES算法 des算法为密码体制中的对">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-12T12:03:08.942Z">
+<meta property="article:modified_time" content="2021-04-12T16:16:23.570Z">
+<meta property="article:author" content="qwqbot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/qwq_circle2.jpg"><link rel="canonical" href="http://qwqbot.com/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/%E7%AC%AC1%E6%AC%A1%E5%AE%9E%E9%AA%8C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-04-13 00:16:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/qwq_circle2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">qwqbot</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-12T12:03:08.942Z" title="发表于 2021-04-12 20:03:08">2021-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-12T16:16:23.570Z" title="更新于 2021-04-13 00:16:23">2021-04-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/">CS0804n</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">实验报告</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><center style="font-size:40px;color:#333333;">DES/3DES 演示实验报告</center>
+<center style="font-size:20px;color:#333333;">10185300229 王鼎</center>
+<h2 id="一-实验环境">一. 实验环境</h2>
+<p><strong>1.操作系统</strong><br>
+　　	操作机： Windows_7<br>
+　　	操作机默认用户名： administrator 密码：123456</p>
+<p><strong>2.实验工具</strong><br>
+　　信息安全综合实验系统</p>
+<h2 id="二-实验内容">二. 实验内容</h2>
+<ul>
+<li>了解DES/3DES算法</li>
+<li>了解DES/3DES算法的实现方法</li>
+<li>掌握DES/3DES算法的原理及过程</li>
+</ul>
+<p><strong>DES算法</strong><br>
+des算法为密码体制中的对称密码体制，又被称为美国数据加密标准，是1972年美国IBM公司研制的对称密码体制加密算法。DES算法具有极高安全性，到目前为止，除了用穷举搜索法对DES算法进行攻击外，还没有发现更有效的办法。</p>
+<p><strong>DES算法基本原理</strong><br>
+其入口参数有三个：key、data、mode。key为加密解密使用的密钥，data为加密解密的数据，mode为其工作模式。当模式为加密模式时，明文按照64位进行分组，形成明文组，key用于对数据加密，当模式为解密模式时，key用于对数据解密。实际运用中，密钥只用到了64位中的56位，其中8位用于错误检测，这样才具有高的安全性。具有分组比较短、密钥太短、密码生命周期短、运算速度较慢等特点。</p>
+<p><strong>3DES算法</strong><br>
+3DES又称Triple DES，是DES加密算法的一种模式，它使用3条56位的密钥对3DES数据进行三次加密。数据加密标准(DES)是美国的一种由来已久的加密标准，它使用对称密钥加密法，并于1981年被ANSI组织规范为ANSI X.3.92。DES使用56位密钥和密码块的方法，而在密码块的方法中，文本被分成64位大小的文本块然后再进行加密。比起最初的DES，3DES更为安全。<br>
+3DES(即Triple DES)是DES向AES过渡的加密算法(1999年，NIST将3-DES指定为过渡的加密标准)，加密算法，其具体实现如下:设Ek()和Dk()代表DES算法的加密和解密过程，K代表DES算法使用的密钥，P代表明文，C代表密文，这样:<br>
+3DES加密过程为:C=Ek3(Dk2(Ek1(P)))<br>
+3DES解密过程为:P=Dk1(EK2(Dk3(C)))</p>
+<p><strong>3DES算法的特点</strong><br>
+3DES（即TripleDES）是DES向AES过度的加密算法，她使用三条56位的密钥对数据进行三次加密。是DES的一个更安全的变形。它是以DES为基本模块，通过组合分组方法设计出分组的加码算法。比起最初的DES，3DES更为安全。</p>
+<h2 id="三-实验步骤">三. 实验步骤</h2>
+<h3 id="DES单步加密演示实验">DES单步加密演示实验</h3>
+<h4 id="密钥扩展">密钥扩展</h4>
+<ol>
+<li>
+<p>打开信息安全综合实验系统</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231108556.png" alt="image-20210412231108556" style="zoom: 33%;" />
+</li>
+<li>
+<p>打开”DES理论学习”,掌握DES算法的的加解密原理;</p>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412231129059.png" alt="image-20210412231129059" style="zoom: 33%;" />
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231150439.png" alt="image-20210412231150439" style="zoom: 33%;" />
+</li>
+<li>
+<p>打开“DES算法流程”, 开始DES单步加密实验, 如图:</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231207759.png" alt="image-20210412231207759" style="zoom: 33%;" />
+</li>
+<li>
+<p>选择密钥输入为ASCII码或十六进制码模式, 输入密钥; 若为ASCII码模式, 则输入8个字符的ASCII码; 若为十六进制码模式, 则输入16个字符的十六进制码(0~9, a~f, A~F).</p>
+<ul>
+<li>
+<p>这里我们输入“<code>12345678</code>&quot;</p>
+<p>点击“比特流”按钮，输入的密钥转化为64位比特流.</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231245552.png" alt="image-20210412231245552" style="zoom: 33%;" />
+</li>
+</ul>
+</li>
+<li>
+<p>点击“置换选择I”按钮, 完成置换选择I运算, 得到56bit有效密钥位, 并分为左右两部分, 各28bit;</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231325375.png" alt="image-20210412231325375" style="zoom:33%;" />
+</li>
+<li>
+<p>点击CO下的“循环左移”按钮，对CO进行循环左移运算；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231346925.png" alt="image-20210412231346925" style="zoom:33%;" />
+</li>
+<li>
+<p>点击DO下的“循环左移”按钮，对DO进行循环左移运算；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231405703.png" alt="image-20210412231405703" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“选择置换II”按钮，得到扩展子密钥K1；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231602590.png" alt="image-20210412231602590" style="zoom:33%;" />
+</li>
+</ol>
+<h4 id="加密">加密</h4>
+<ol>
+<li>
+<p>进入第二部分——加密，选择加密输入为ASCII码或十六进制码模式，输入明文；若为ASCII码模式，则输入8个字符的ASCII码；若为十六进制码模式，则输入16个字符的十六进制码(0~9，a~f，A~F);</p>
+<ul>
+<li>
+<p>选择ASCII，然后输入字符为：<code>12345678</code></p>
+<p>点击“比特流”按钮，将输入明文转化为64位比特流；</p>
+</li>
+</ul>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412231631903.png" alt="image-20210412231631903" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“初始IP置换”按钮，就64bit明文进行IP置换设置，得到左右两个部分，各32bit；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231643976.png" alt="image-20210412231643976" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“选择运算E”按钮，将右32bit扩展为48bit；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231653926.png" alt="image-20210412231653926" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“异或运算”按钮，将扩展的48bit与子密钥K1进行按位异或；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231706793.png" alt="image-20210412231706793" style="zoom:33%;" />
+</li>
+<li>
+<p>依次点击“S1”、“S2”、“S3”、“S4”、“S5”、“S6”、“S7”、“S8”按钮，对中间结果分组后进行S盒运算；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231721657.png" alt="image-20210412231721657" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“置换运算P”按钮，对S盒运算结果进行P置换运算；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231735748.png" alt="image-20210412231735748" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“异或运算”按钮，将P置换运算结果与L0进行按位异或，得到R1；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231801028.png" alt="image-20210412231801028" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“逆初始置换IP_1”按钮，得到最终的加密结果。</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412231812991.png" alt="image-20210412231812991" style="zoom:33%;" />
+</li>
+</ol>
+<h3 id="DES-算法演示实验">DES 算法演示实验</h3>
+<ol>
+<li>
+<p>打开“DES理论学习”，掌握DES算法的的加解密原理；</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232134374.png" alt="image-20210412232134374" style="zoom:33%;" />
+</li>
+<li>
+<p>打开“DES实例”，开始进行字符串的加解密操作，如图：</p>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412232149726.png" alt="image-20210412232149726" style="zoom:33%;" />
+</li>
+<li>
+<p>选择“工作模式”为“ECB”或“CBC”或“CFB”或“OFB”；选择“填充模式”为“ISO_1”或“ISO_2”或“PAK_7”；输入明文前选择ASCII码或十六进制码输入模式，然后在明文编辑框内输入待加密的字符串；这里工作模式我们选择“ECB”填充模式我们选择“ISO_1”</p>
+<ul>
+<li>明文输入“<code>hello</code>”</li>
+</ul>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232222622.png" alt="image-20210412232222622" style="zoom:33%;" />
+</li>
+<li>
+<p>输入密钥前选择ASCII码或十六进制码输入模式，然后在密钥编辑框内输入密钥；若为ASCII码模式，则输入不超过8个字符的ASCII码，不足部分将由系统以0x00补足；若为十六进制码模式，则输入不超过16个字符的十六进制码（0～9，a～f，A～F），不足部分将由系统以0x00补足。点击“加密”按钮，进行加密操作，密钥扩展的结果将显示在列表框中，密文将显示在密文编辑框中；</p>
+<ul>
+<li>这里我们密钥选择ASCII码模式，输入“<code>qwe</code>”</li>
+</ul>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412232253093.png" alt="image-20210412232253093" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“解密”按钮，密文将被解密，显示在明文编辑框中，填充的字符将被自动除去；也可以修改密钥，再点击“解密”按钮，观察解密是否会正确；点击“清空”按钮即可进行下次实验。</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232306127.png" alt="image-20210412232306127" style="zoom:33%;" />
+</li>
+</ol>
+<h3 id="3DES-算法演示实验">3DES 算法演示实验</h3>
+<ol>
+<li>
+<p>打开“3DES实例”，开始3DES运算加解密实验，如图</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232508291.png" alt="image-20210412232508291" style="zoom:33%;" />
+</li>
+<li>
+<p>选择“工作模式”为“ECB”或“CBC”或“CFB”或“OFB”；选择“填充模式”为“ISO_1”或“ISO_2”或“PAK_7”；这里我们选择“工作模式”为“ECB”，“填充模式”为“ISO_1”。</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232537555.png" alt="image-20210412232537555" style="zoom:33%;" />
+</li>
+<li>
+<p>输入明文前选择ASCII码或十六进制码输入模式，然后在明文编辑框内输入待加密的字符串；</p>
+<ul>
+<li>这里我们输入“<code>hello</code>”；</li>
+</ul>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232543712.png" alt="image-20210412232543712" style="zoom:33%;" />
+</li>
+<li>
+<p>选择密钥长度为16字节或者24字节，分别代表双密钥或三密钥；输入密钥前选择ASCII码或十六进制码输入模式，然后在密钥编辑框内输入密钥；若为ASCII码模式，则输入16个或24个字符的ASCII码，不足部分将由系统以0x00补足；若为十六进制码模式，则输入不超过32个或48个字符的十六进制码（0～9，a～f，A～F），不足部分将由系统以0x00补足；</p>
+<ul>
+<li>这里密钥我们填写“<code>asd</code>”。</li>
+</ul>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232557546.png" alt="image-20210412232557546" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“加密”按钮，进行加密操作，密钥扩展的结果将显示在列表框中，密文将显示在密文编辑框中；</p>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412232608506.png" alt="image-20210412232608506" style="zoom:33%;" />
+</li>
+<li>
+<p>点击“解密”按钮，密文将被解密，显示在明文编辑框中，填充的字符将被自动除去；也可以修改密钥，再点击“解密”按钮，观察解密是否正确；点击“清空”按钮，观察解密是否会正确。</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232618943.png" alt="image-20210412232618943" style="zoom:33%;" />
+</li>
+</ol>
+<h2 id="四-实验总结分析">四. 实验总结分析</h2>
+<p>本次实验在理论学习的基础上, 详细操作了DES和3DES的加密解密过程, 对DES的<strong>密钥扩展</strong> 和 <strong>16轮迭代</strong> 有了更深的理解.</p>
+<h2 id="五-实验思考题">五. 实验思考题</h2>
+<ul>
+<li>
+<p>des</p>
+<img src="../../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210412232837384.png" alt="image-20210412232837384" style="zoom:33%;" />
+</li>
+<li>
+<p>3des</p>
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232753979.png" alt="image-20210412232753979" style="zoom:33%;" />
+<img src="http://ding-typora.oss-cn-beijing.aliyuncs.com/img/image-20210412232802641.png" alt="image-20210412232802641" style="zoom:33%;" /></li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/qwq_circle2.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">qwqbot</div><div class="author-info__description">CS-ACM-MUSIC-REANGDING-MOVIE</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/pwqbot"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-text">一. 实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-text">二. 实验内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-text">三. 实验步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DES%E5%8D%95%E6%AD%A5%E5%8A%A0%E5%AF%86%E6%BC%94%E7%A4%BA%E5%AE%9E%E9%AA%8C"><span class="toc-text">DES单步加密演示实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E6%89%A9%E5%B1%95"><span class="toc-text">密钥扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86"><span class="toc-text">加密</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DES-%E7%AE%97%E6%B3%95%E6%BC%94%E7%A4%BA%E5%AE%9E%E9%AA%8C"><span class="toc-text">DES 算法演示实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3DES-%E7%AE%97%E6%B3%95%E6%BC%94%E7%A4%BA%E5%AE%9E%E9%AA%8C"><span class="toc-text">3DES 算法演示实验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93%E5%88%86%E6%9E%90"><span class="toc-text">四. 实验总结分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-text">五. 实验思考题</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: #D5F3F4"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By qwqbot</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', '', 'katex-wrap')
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
