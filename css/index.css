@@ -2243,7 +2243,7 @@ blockquote footer cite:before {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 20em;
+  height: 18em;
   border-radius: 41px;
   background: #f7f7e8;
   -webkit-box-shadow: var(--card-box-shadow);
@@ -2282,7 +2282,7 @@ blockquote footer cite:before {
 }
 #recent-posts > .recent-post-item .post_cover {
   overflow: hidden;
-  width: 27%;
+  width: 23%;
   height: 100%;
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
@@ -2308,7 +2308,7 @@ blockquote footer cite:before {
   display: inline-block;
   overflow: hidden;
   padding: 0px 100px 0px 100px;
-  width: 73%;
+  width: 77%;
 }
 #recent-posts > .recent-post-item >.recent-post-info.no-cover {
   width: 100%;
