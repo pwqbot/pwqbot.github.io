@@ -2223,7 +2223,7 @@ blockquote footer cite:before {
   margin-top: 75px;
 }
 #recent-posts > .recent-post-item {
-  margin-bottom: 75px;
+  margin-bottom: 35px;
   margin-left: 40px;
   margin-right: 0px;
   display: -webkit-box;
@@ -3158,7 +3158,7 @@ blockquote footer cite:before {
 }
 #footer-wrap {
   position: relative;
-  padding: 2rem 1rem;
+  padding: 4rem 2rem 2rem 2rem;
   background-image: -webkit--webkit-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
   background-image: -webkit--moz-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
   background-image: -webkit--o-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
@@ -3207,6 +3207,7 @@ blockquote footer cite:before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
+  font-size: 16px;
 }
 #footer-wrap a {
   color: var(--light-grey);
@@ -3693,11 +3694,11 @@ _:future,
 #pagination .extend {
   color: #ede6fb;
   position: relative;
-  left: 160px;
+  left: 145px;
 }
 #pagination .page-number {
   position: relative;
-  left: 160px;
+  left: 145px;
   display: inline-block;
   margin: 0.5rem 0.5rem auto;
   min-width: 1.5rem;
