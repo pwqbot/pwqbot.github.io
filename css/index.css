@@ -1226,7 +1226,7 @@ hr:before,
   }
 }
 :root {
-  --global-font-size: 13px;
+  --global-font-size: 15px;
   --global-bg: #fff;
   --font-color: #4c4948;
   --hr-border: #a4d8fa;
@@ -1640,7 +1640,7 @@ blockquote footer cite:before {
 }
 #article-container pre,
 #article-container code {
-  font-size: 13px;
+  font-size: 15px;
   font-family: consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }
 #article-container code {
@@ -1671,7 +1671,7 @@ blockquote footer cite:before {
 #article-container figure.highlight figcaption,
 #article-container figure.highlight .caption {
   padding: 0.3rem 0 0.1rem 0.7rem;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1em;
 }
 #article-container figure.highlight figcaption a,
@@ -1703,7 +1703,7 @@ blockquote footer cite:before {
   height: 2.15em;
   background: #1c1c1c;
   color: rgba(238,255,255,0.8);
-  font-size: 13px;
+  font-size: 15px;
 }
 #article-container .highlight-tools.closed + table {
   display: none;
@@ -2220,10 +2220,10 @@ blockquote footer cite:before {
   margin-top: 25px;
 }
 #recent-posts > .recent-post-item:not(:first-child) {
-  margin-top: 40px;
+  margin-top: 75px;
 }
 #recent-posts > .recent-post-item {
-  margin-left: 0px;
+  margin-left: 40px;
   margin-right: 0px;
   display: -webkit-box;
   display: -moz-box;
@@ -2243,9 +2243,9 @@ blockquote footer cite:before {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 18em;
-  border-radius: 41px;
-  background: #f7f7e8;
+  height: 12em;
+  border-radius: 111px 21px 21px 111px;
+  background: #f0f5f9;
   -webkit-box-shadow: var(--card-box-shadow);
   box-shadow: var(--card-box-shadow);
   -webkit-transition: all 0.3s;
@@ -2271,10 +2271,12 @@ blockquote footer cite:before {
   transform: scale(1);
 }
 #recent-posts > .recent-post-item .left_radius {
-  border-radius: 40px;
+  border-radius: 120px;
+  border-radius: 10px 10px 10px 10px;
 }
 #recent-posts > .recent-post-item .right_radius {
-  border-radius: 40px;
+  border-radius: 10px 10px 10px 10px;
+  border-radius: 200px;
 }
 #recent-posts > .recent-post-item.ads-wrap {
   display: block !important;
@@ -2282,8 +2284,8 @@ blockquote footer cite:before {
 }
 #recent-posts > .recent-post-item .post_cover {
   overflow: hidden;
-  width: 23%;
-  height: 100%;
+  width: 25%;
+  height: 135%;
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
 #recent-posts > .recent-post-item .post_cover img.post_bg {
@@ -2307,8 +2309,8 @@ blockquote footer cite:before {
   text-align: center;
   display: inline-block;
   overflow: hidden;
-  padding: 0px 100px 0px 100px;
-  width: 77%;
+  padding: 0px 50px 0px 50px;
+  width: 75%;
 }
 #recent-posts > .recent-post-item >.recent-post-info.no-cover {
   width: 100%;
@@ -2316,7 +2318,7 @@ blockquote footer cite:before {
 #recent-posts > .recent-post-item >.recent-post-info > .article-title {
   margin-bottom: 0.3rem;
   color: var(--text-highlight-color);
-  font-size: 2em;
+  font-size: 1.85em;
   line-height: 1.4;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -2330,7 +2332,7 @@ blockquote footer cite:before {
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap {
   color: #858585;
-  font-size: 90%;
+  font-size: 40%;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .post-meta-date {
   cursor: default;
@@ -2361,6 +2363,7 @@ blockquote footer cite:before {
   text-decoration: underline;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .content {
+  font-size: 0.7rem;
   margin-top: 0.3rem;
   -webkit-line-clamp: 3;
 }
@@ -2437,6 +2440,7 @@ blockquote footer cite:before {
 }
 #aside-content {
   width: 25%;
+  margin-bottom: 50px;
 }
 @media screen and (min-width: 900px) {
   #aside-content {
@@ -3639,19 +3643,30 @@ _:future,
 #pagination .pagination {
   text-align: center;
 }
+#pagination .extend {
+  color: #ede6fb;
+  position: relative;
+  left: 160px;
+}
 #pagination .page-number {
+  position: relative;
+  left: 160px;
   display: inline-block;
-  margin: 0 0.2rem;
-  min-width: 1.2rem;
-  height: 1.2rem;
+  margin: 0.5rem 0.5rem auto;
+  min-width: 1.5rem;
+  height: 1.5rem;
   text-align: center;
-  line-height: 1.2rem;
-  cursor: pointer;
+  line-height: 1.5rem;
+  border-radius: 3px;
+  color: #f1f5f9;
+  font-size: 18px;
 }
 #pagination .page-number.current {
-  background: #00c4b6;
-  color: var(--white);
-  cursor: default;
+  background: #f1f5f9;
+  color: #85b055;
+}
+#pagination .page-number.current {
+  border-radius: 50px;
 }
 #pagination img.prev-cover,
 #pagination img.next-cover {
