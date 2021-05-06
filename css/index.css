@@ -3708,6 +3708,7 @@ _:future,
   border-radius: 3px;
   color: #f1f5f9;
   font-size: 18px;
+  cursor: pointer;
 }
 #pagination .page-number.current {
   background: #f1f5f9;
@@ -3715,6 +3716,7 @@ _:future,
 }
 #pagination .page-number.current {
   border-radius: 50px;
+  cursor: default;
 }
 #pagination img.prev-cover,
 #pagination img.next-cover {
