@@ -2223,6 +2223,7 @@ blockquote footer cite:before {
   margin-top: 75px;
 }
 #recent-posts > .recent-post-item {
+  margin-bottom: 75px;
   margin-left: 40px;
   margin-right: 0px;
   display: -webkit-box;
@@ -3158,7 +3159,53 @@ blockquote footer cite:before {
 #footer-wrap {
   position: relative;
   padding: 2rem 1rem;
-  color: var(--light-grey);
+  background-image: -webkit--webkit-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
+  background-image: -webkit--moz-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
+  background-image: -webkit--o-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
+  background-image: -webkit--ms-linear-gradient(0deg, #fff3b0 15%, #ca26ff 85%);
+  background-image: -webkit-linear-gradient(90deg, #fff3b0 15%, #ca26ff 85%);
+  background-image: -webkit--webkit-linear-gradient(0deg, #be93c5 15%, #7bc6cc 85%);
+  background-image: -webkit--moz-linear-gradient(0deg, #be93c5 15%, #7bc6cc 85%);
+  background-image: -webkit--o-linear-gradient(0deg, #be93c5 15%, #7bc6cc 85%);
+  background-image: -webkit--ms-linear-gradient(0deg, #be93c5 15%, #7bc6cc 85%);
+  background-image: -webkit-linear-gradient(90deg, #be93c5 15%, #7bc6cc 85%);
+  background-image: -webkit--webkit-linear-gradient(0deg, #232526 15%, #417505 85%);
+  background-image: -webkit--moz-linear-gradient(0deg, #232526 15%, #417505 85%);
+  background-image: -webkit--o-linear-gradient(0deg, #232526 15%, #417505 85%);
+  background-image: -webkit--ms-linear-gradient(0deg, #232526 15%, #417505 85%);
+  background-image: -webkit-linear-gradient(90deg, #232526 15%, #417505 85%);
+  background-image: -webkit--webkit-linear-gradient(0deg, #232526 15%, #414345 85%);
+  background-image: -webkit--moz-linear-gradient(0deg, #232526 15%, #414345 85%);
+  background-image: -webkit--o-linear-gradient(0deg, #232526 15%, #414345 85%);
+  background-image: -webkit--ms-linear-gradient(0deg, #232526 15%, #414345 85%);
+  background-image: -webkit-linear-gradient(90deg, #232526 15%, #414345 85%);
+  background-image: -webkit--webkit-linear-gradient(110deg, #417505 43%, #fff3b0 65%);
+  background-image: -webkit--moz-linear-gradient(110deg, #417505 43%, #fff3b0 65%);
+  background-image: -webkit--o-linear-gradient(110deg, #417505 43%, #fff3b0 65%);
+  background-image: -webkit--ms-linear-gradient(110deg, #417505 43%, #fff3b0 65%);
+  background-image: -webkit-linear-gradient(-20deg, #417505 43%, #fff3b0 65%);
+  background-image: -webkit--webkit-linear-gradient(110deg, #417505 45%, #fff 55%);
+  background-image: -webkit--moz-linear-gradient(110deg, #417505 45%, #fff 55%);
+  background-image: -webkit--o-linear-gradient(110deg, #417505 45%, #fff 55%);
+  background-image: -webkit--ms-linear-gradient(110deg, #417505 45%, #fff 55%);
+  background-image: -webkit-linear-gradient(-20deg, #417505 45%, #fff 55%);
+  background-image: -webkit--webkit-linear-gradient(110deg, #000 44%, #417505 55%);
+  background-image: -webkit--moz-linear-gradient(110deg, #000 44%, #417505 55%);
+  background-image: -webkit--o-linear-gradient(110deg, #000 44%, #417505 55%);
+  background-image: -webkit--ms-linear-gradient(110deg, #000 44%, #417505 55%);
+  background-image: -webkit-linear-gradient(-20deg, #000 44%, #417505 55%);
+  background-image: -webkit--webkit-linear-gradient(110deg, #fff 44%, #76ab8a 55%);
+  background-image: -webkit--moz-linear-gradient(110deg, #fff 44%, #76ab8a 55%);
+  background-image: -webkit--o-linear-gradient(110deg, #fff 44%, #76ab8a 55%);
+  background-image: -webkit--ms-linear-gradient(110deg, #fff 44%, #76ab8a 55%);
+  background-image: -webkit-linear-gradient(-20deg, #fff 44%, #76ab8a 55%);
+  background-image: -webkit--webkit-linear-gradient(180deg, #fff 45%, #ede6fb 95%);
+  background-image: -webkit--moz-linear-gradient(180deg, #fff 45%, #ede6fb 95%);
+  background-image: -webkit--o-linear-gradient(180deg, #fff 45%, #ede6fb 95%);
+  background-image: -webkit--ms-linear-gradient(180deg, #fff 45%, #ede6fb 95%);
+  background-image: -webkit-linear-gradient(-90deg, #fff 45%, #ede6fb 95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 #footer-wrap a {
