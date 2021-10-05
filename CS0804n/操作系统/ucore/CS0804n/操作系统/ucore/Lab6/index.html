@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ucore - Lab6 调度器 | qwqbot</title><meta name="author" content="qwqbot"><meta name="copyright" content="qwqbot"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="实验内容  理解操作系统的调度管理机制 熟悉 ucore 的系统调度器框架, 以及缺省的 Round - Robin 调度算法 基于调度器框架实现一个(Stride Scheduling) 调度算法来替换缺省的调度算法  前置 调度接口 调度器框架 ucore 定义了管理进程调度的类sched_class, 该函数定义了一系列的函数指针, 可以通过绑定不同的函数来实现不同的进程调度算法. 这样做能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ucore - Lab6 调度器">
+<meta property="og:url" content="http://qwqbot.com/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/Lab6/index.html">
+<meta property="og:site_name" content="qwqbot">
+<meta property="og:description" content="实验内容  理解操作系统的调度管理机制 熟悉 ucore 的系统调度器框架, 以及缺省的 Round - Robin 调度算法 基于调度器框架实现一个(Stride Scheduling) 调度算法来替换缺省的调度算法  前置 调度接口 调度器框架 ucore 定义了管理进程调度的类sched_class, 该函数定义了一系列的函数指针, 可以通过绑定不同的函数来实现不同的进程调度算法. 这样做能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E7%A6%8F%E7%A6%84%E5%AF%BF_%E6%88%91%E7%94%A8%E4%BB%80%E4%B9%88%E6%8A%8A%E4%BD%A0%E7%95%99%E4%BD%8F.jpg">
+<meta property="article:published_time" content="2021-05-30T10:23:50.237Z">
+<meta property="article:modified_time" content="2021-09-20T10:58:32.553Z">
+<meta property="article:author" content="qwqbot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E7%A6%8F%E7%A6%84%E5%AF%BF_%E6%88%91%E7%94%A8%E4%BB%80%E4%B9%88%E6%8A%8A%E4%BD%A0%E7%95%99%E4%BD%8F.jpg"><link rel="shortcut icon" href="/img/qwq_circle2.jpg"><link rel="canonical" href="http://qwqbot.com/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/Lab6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/pwa/manifest.json"/><link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/pwa/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/pwa/16.png"/><link rel="mask-icon" href="/pwa/safari-pinned-tab.svg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-20 18:58:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/qwq_circle2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E7%A6%8F%E7%A6%84%E5%AF%BF_%E6%88%91%E7%94%A8%E4%BB%80%E4%B9%88%E6%8A%8A%E4%BD%A0%E7%95%99%E4%BD%8F.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">qwqbot</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ucore - Lab6 调度器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-30T10:23:50.237Z" title="发表于 2021-05-30 18:23:50">2021-05-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-20T10:58:32.553Z" title="更新于 2021-09-20 18:58:32">2021-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/">CS0804n</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/">ucore</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>实验内容</h1>
+<ul>
+<li>理解操作系统的调度管理机制</li>
+<li>熟悉 <code>ucore</code> 的系统调度器框架, 以及缺省的 Round - Robin 调度算法</li>
+<li>基于调度器框架实现一个(Stride Scheduling) 调度算法来替换缺省的调度算法</li>
+</ul>
+<h1>前置</h1>
+<h2 id="调度接口">调度接口</h2>
+<h3 id="调度器框架">调度器框架</h3>
+<p><code>ucore</code> 定义了管理进程调度的类<code>sched_class</code>, 该函数定义了一系列的函数指针, 可以通过绑定不同的函数来实现不同的进程调度算法.</p>
+<p>这样做能够保证调度器的通用性, 在之前的实验中也都有体现.</p>
+<ul>
+<li>
+<p><code>sched_class</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sched_class</span> &#123;</span></span><br><span class="line">    <span class="comment">// 调度器的名字</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="comment">// 初始化run_queue</span></span><br><span class="line">    <span class="keyword">void</span> (*init)(struct run_queue *rq);</span><br><span class="line">    <span class="comment">// 把进程加入等待队列</span></span><br><span class="line">    <span class="keyword">void</span> (*enqueue)(struct run_queue *rq, struct proc_struct *proc);</span><br><span class="line">    <span class="comment">// 把进程移除等待队列</span></span><br><span class="line">    <span class="keyword">void</span> (*dequeue)(struct run_queue *rq, struct proc_struct *proc);</span><br><span class="line">    <span class="comment">// 在进程等待队列中选择并返回下一个可运行的进程</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">proc_struct</span> *(*<span class="title">pick_next</span>)(<span class="keyword">struct</span> <span class="title">run_queue</span> *<span class="title">rq</span>);</span></span><br><span class="line">    <span class="comment">// 更新进程时钟</span></span><br><span class="line">    <span class="keyword">void</span> (*proc_tick)(struct run_queue *rq, struct proc_struct *proc);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用来维护所有等待进程的结构体是<code>run_queue</code>. 它需要有一个数据结构来管理所有等待进程, 记录等待进程的数量,</p>
+<ul>
+<li>
+<p><code>run_queue</code></p>
+<p>不同的调度算法需要的数据结构是不同的, 如在<code>lab6</code> 中实现的RR算法, 它只需要一个简单的链表即可. 而后面实现的Stride-schling算法它则需要一个堆来维护进程信息.</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">run_queue</span> &#123;</span></span><br><span class="line">    <span class="keyword">list_entry_t</span> run_list;            <span class="comment">// RR</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> proc_num;            <span class="comment">// 等待队列中的进程数量</span></span><br><span class="line">    <span class="keyword">int</span> max_time_slice;               <span class="comment">// RR:划给一个进程的最大时间片</span></span><br><span class="line">    <span class="comment">// For LAB6 ONLY</span></span><br><span class="line">    <span class="keyword">skew_heap_entry_t</span> *lab6_run_pool;  <span class="comment">// Stride-schling</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>注意一个细节, 这里的 <code>run_queue</code> 是一个进程之间的全局变量, 所以访问的时候需要互斥访问. 在这里用最简单的关中断方法即可.</p>
+<p>也就是说 <code>sched_class</code> 中所有关于 <code>run_queue</code> 的操作都得关中断之后进行.</p>
+</blockquote>
+<p>为了实现调度算法, 每个进程块都得维护一些额外的信息. <code>lab6</code> 在进程管理块中增加了一些额外信息.</p>
+<ul>
+<li>
+<p><code>proc_struct</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc_struct</span> &#123;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">bool</span> need_resched;                 <span class="comment">// 1表示需要调度</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">proc_state</span> <span class="title">state</span>;</span>                      <span class="comment">// Runnable/Sleeping/Uninit/Zombie</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">run_queue</span> *<span class="title">rq</span>;</span>                       <span class="comment">// 上面介绍的运行队列</span></span><br><span class="line">    <span class="keyword">list_entry_t</span> run_link;                      <span class="comment">// the entry linked in run queue</span></span><br><span class="line">    <span class="keyword">int</span> time_slice;                             <span class="comment">// 进程占用的CPU时间</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Stride-schling 独占</span></span><br><span class="line">    <span class="keyword">skew_heap_entry_t</span> lab6_run_pool;            <span class="comment">// FOR LAB6 ONLY: the entry in the run pool</span></span><br><span class="line">    <span class="keyword">uint32_t</span> lab6_stride;                       <span class="comment">// FOR LAB6 ONLY: the current stride of the process </span></span><br><span class="line">    <span class="keyword">uint32_t</span> lab6_priority;                     <span class="comment">// FOR LAB6 ONLY: the priority of process, set by lab6_set_priority(uint32_t)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="内核调用接口">内核调用接口</h3>
+<p>有了以上的准备, 就可以给内核提供调度函数接口了. 主要有以下四个功能需要实现.</p>
+<ol>
+<li>
+<p><code>sched_class_enqueue</code></p>
+<p>把进程加入 Runnable 队列.</p>
+<p>会在以下时刻发生.</p>
+<ul>
+<li>
+<p>进程创建之后.</p>
+</li>
+<li>
+<p>处在 Sleeping 状态的进程醒来.</p>
+</li>
+<li>
+<p>Running 状态的进程重新回到 Runnable 状态.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>sched_class_dequeue</code></p>
+<p>把进程从 Runnable 队列中移出.</p>
+<p>会在以下时刻发生</p>
+<ul>
+<li>运行进程, 从 Runnable 状态进入 Running状态.</li>
+<li>阻塞进程. 从 Runnable 状态进入 Sleeping状态.</li>
+<li>结束进程, 从 Runnable 状态进入 Zombie 状态.  (在ucore代码里没看到这个的实现??)</li>
+</ul>
+</li>
+<li>
+<p><code>sched_class_pick_next</code></p>
+<p>从 Runnable 队列中选择一个进程运行.</p>
+<p>注意调用成功之后要把选择到的进程移出Runnable队列.</p>
+</li>
+<li>
+<p><code>sched_class_proc_tick</code></p>
+<p>更新当前运行进程的时间. 在每次时钟中断后都会调用.</p>
+</li>
+</ol>
+<p>当然最后还有一个初始化函数, 来初始化调度器.</p>
+<ol start="5">
+<li>
+<p><code>sched_init</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">sched_init(<span class="keyword">void</span>) &#123;</span><br><span class="line">    list_init(&amp;timer_list); <span class="comment">// 本次实验没用</span></span><br><span class="line">    sched_class = &amp;default_sched_class; <span class="comment">// 绑定调度器</span></span><br><span class="line"></span><br><span class="line">    rq = &amp;__rq;                         <span class="comment">// 绑定并初始化运行队列</span></span><br><span class="line">    rq-&gt;max_time_slice = MAX_TIME_SLICE;</span><br><span class="line">    sched_class-&gt;init(rq);</span><br><span class="line"></span><br><span class="line">    cprintf(<span class="string">&quot;sched class: %s\n&quot;</span>, sched_class-&gt;name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上这些函数会在什么时候调用呢.</p>
+<ol>
+<li>
+<p><code>init_main</code></p>
+<p>内核初始化的时候会调用<code>sched_init</code> 函数初始化调度器</p>
+</li>
+<li>
+<p><code>wake_proc</code></p>
+<p>唤醒处于 Sleeping 状态的进程, 或是进程创建完成之后会调用 <code>sched_class_enqueue</code> 函数, 把进程加入等待队列</p>
+</li>
+<li>
+<p><code>schedule</code></p>
+<p>调度函数. 相当于linux 中的 <code>yield</code> 函数. 发生了进程的切换或者阻塞.</p>
+<p>处在 Running 态的进程调用后会进入 Runnable/Sleeping , 并选择一个Runnable 进程运行.</p>
+<p>如果发生进程阻塞, 则只会调用<code>sched_class_pick_next</code> 和 <code>sched_class_dequeue</code>.</p>
+<p>如果发生的是进程切换, 还会调用 <code>sched_class_enqueue</code> 将其重新加入 Runnable 队列.</p>
+</li>
+<li>
+<p><code>trap_dispatch</code></p>
+<p>中断处理到时钟中断的话, 会调用 <code>sched_class_proc_tick</code> 函数更新进程的时钟.</p>
+</li>
+</ol>
+<h1>过程</h1>
+<p>这里过一遍进程调度的流程.</p>
+<p>定时器每10ms 向cpu发送一个中断信号, 引发时钟中断.</p>
+<p>然后进行一系列的中断准备工作, 之前的实验都讲的很细了, 不再赘述.</p>
+<p>处理中断, 在 <code>trap_dispatch</code> 函数中调用 <code>sched_class_proc_tick</code>, 更新当前运行进程的状态.</p>
+<ul>
+<li>
+<p><code>trap_dispatch</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">trap_dispatch(struct trapframe *tf) &#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">case</span> IRQ_OFFSET + IRQ_TIMER:</span><br><span class="line">            ticks ++;</span><br><span class="line">            assert(current != <span class="literal">NULL</span>);</span><br><span class="line">            sched_class_proc_tick(current);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">   	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>更新结束之后返回到 <code>trap</code> 函数, 如果该进程是一个用户进程, 它会检测运行进程调用了 <code>sched_class_proc_tick</code> 之后, 是否耗尽了所有可用时间, 如果耗尽则进行调度.</p>
+<ul>
+<li>
+<p><code>trap</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">trap(struct trapframe *tf) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (!in_kernel) &#123;</span><br><span class="line">        <span class="keyword">if</span> (current-&gt;flags &amp; PF_EXITING) &#123;</span><br><span class="line">            do_exit(-E_KILLED);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (current-&gt;need_resched) &#123;   <span class="comment">// sched_class_proc_tick 中会更新need_resched</span></span><br><span class="line">            schedule();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>调度函数 <code>schedule</code> 会进行运行进程的切换.</p>
+<ul>
+<li>
+<p><code>schedule</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">schedule(<span class="keyword">void</span>) &#123;</span><br><span class="line">    <span class="keyword">bool</span> intr_flag;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">proc_struct</span> *<span class="title">next</span>;</span></span><br><span class="line">    local_intr_save(intr_flag);</span><br><span class="line">    &#123;</span><br><span class="line">        current-&gt;need_resched = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (current-&gt;state == PROC_RUNNABLE) &#123; <span class="comment">// 如果是Running的进程调用, 则要加回运行队列</span></span><br><span class="line">            sched_class_enqueue(current);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((next = sched_class_pick_next()) != <span class="literal">NULL</span>) &#123; <span class="comment">// 选择下一个Runnable 进程</span></span><br><span class="line">            sched_class_dequeue(next);                  <span class="comment">// 移除运行队列</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (next == <span class="literal">NULL</span>) &#123;                             <span class="comment">// 如果不存在则运行idleproc</span></span><br><span class="line">            next = idleproc;</span><br><span class="line">        &#125;</span><br><span class="line">        next-&gt;runs ++;</span><br><span class="line">        <span class="keyword">if</span> (next != current) &#123;                          <span class="comment">// 成功找到下一个可运行进程</span></span><br><span class="line">            proc_run(next);                             <span class="comment">// 上下文切换</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    local_intr_restore(intr_flag);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>进程上下文切换什么的在之前实验中介绍过了, 主要就是换一下页目录表和寄存器, 然后从上一次中断的地方重新运行.</p>
+<h3 id="Stride-Scheduling">Stride Scheduling</h3>
+<p>对每个进程, 赋予其两个属性</p>
+<ul>
+<li>
+<p><code>stride</code></p>
+<p>表示该进程的调度优先级, 每次在等待队列中选择拥有最小 <code>stride</code> 的进程运行.</p>
+<p>初始为0.</p>
+</li>
+<li>
+<p><code>pass</code></p>
+<p>步进值. 当进程被调度一次之后, 其 <code>stride</code> 会加上 <code>pass</code>, 再将其重新放回等待队列中.</p>
+</li>
+</ul>
+<p>一开始我们赋予每个进程一个大于 1 的 <code>P.priority</code>, 其步进值为</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mi mathvariant="normal">.</mi><mi>p</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mfrac><mrow><mi>B</mi><mi>i</mi><mi>g</mi><mi>S</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><mi>e</mi></mrow><mrow><mi>P</mi><mi mathvariant="normal">.</mi><mi>p</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi><mi>i</mi><mi>t</mi><mi>y</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">P.pass = \frac{BigStride}{P.priority}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord">.</span><span class="mord mathnormal">p</span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.25188em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord">.</span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>其中 <code>BigStride</code> 是一个定义好的大常数.</p>
+<p>可以看出 <code>P.priority</code> 越高, 其步进值越小, 也就越容易被调度.</p>
+<h3 id="数值溢出问题">数值溢出问题</h3>
+<p>这里ucore讲的…..</p>
+<p>只考虑等待队列中有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 个进程正在调度, 并且一直是这 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 个进程在调度.</p>
+<p>那么会有以下不等式成立.</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>−</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub><mo>≤</mo><mi>p</mi><mi>a</mi><mi>s</mi><msub><mi>s</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stride_{max} - stride_{min} \le pass_{max}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>假设不成立, 那么 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stride_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 一定在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stide_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 之后被调度了两次. 但第一次调度之后其值就大于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stride_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, 所以不会被连续调度两次.</p>
+<p>在我们的比较函数中, 用有符号 16 位数的正负来比较两个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">stride</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span></span></span></span> 的大小</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">proc_stride_comp_f(<span class="keyword">void</span> *a, <span class="keyword">void</span> *b)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="class"><span class="keyword">struct</span> <span class="title">proc_struct</span> *<span class="title">p</span> =</span> le2proc(a, lab6_run_pool);</span><br><span class="line">     <span class="class"><span class="keyword">struct</span> <span class="title">proc_struct</span> *<span class="title">q</span> =</span> le2proc(b, lab6_run_pool);</span><br><span class="line">     <span class="keyword">int32_t</span> c = p-&gt;lab6_stride - q-&gt;lab6_stride;</span><br><span class="line">     <span class="keyword">if</span> (c &gt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先, 无符号数的增加可以看作在一个环上走.</p>
+<img src= "/img/loading.gif" data-lazy-src="C:\Users\ding\AppData\Roaming\Typora\typora-user-images\image-20210615190228293.png" alt="image-20210615190228293" style="zoom:67%;" />
+<p>所以只要控制<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stride_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>i</mi><mi>r</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stirde_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 之间不会差超过一圈, 就可以比较他们的相对大小.</p>
+<p>但是这里我们用的是有符号16位比较大小, 其能表示的范围是无符号的一半, 所以要控制<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>i</mi><mi>r</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stirde_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><msub><mi>e</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">stride_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 之间不会差超过半圈.</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E7%A6%8F%E7%A6%84%E5%AF%BF_%E6%88%91%E7%94%A8%E4%BB%80%E4%B9%88%E6%8A%8A%E4%BD%A0%E7%95%99%E4%BD%8F.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CS0804n/Game-Go/Unity/CS0804n/Game%20Go/Unity/Human/"><img class="prev-cover" data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/RIOPY_RIOPY.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">人类一团散沙 BY U3d - 游戏项目实践期末项目报告</div></div></a></div><div class="next-post pull-right"><a href="/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/CS0804n/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ucore/Lab7/"><img class="next-cover" data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E8%A3%98%E5%BE%B7_%E9%A2%81%E5%A5%96%E7%9A%84%E6%97%B6%E5%80%99%E6%88%91%E8%A6%81%E7%BC%BA%E5%B8%AD.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ucore - Lab7 同步互斥</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/qwq_circle2.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">qwqbot</div><div class="author-info__description">CS-ACM-MUSIC-REANGDING-MOVIE</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/pwqbot"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:974314484@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">实验内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E6%8E%A5%E5%8F%A3"><span class="toc-text">调度接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E6%A1%86%E6%9E%B6"><span class="toc-text">调度器框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E8%B0%83%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="toc-text">内核调用接口</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stride-Scheduling"><span class="toc-text">Stride Scheduling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98"><span class="toc-text">数值溢出问题</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最近更新</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/uncategorized/CS0804n/git/" title="无题"><img data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E8%A3%98%E5%BE%B7_%E9%A2%81%E5%A5%96%E7%9A%84%E6%97%B6%E5%80%99%E6%88%91%E8%A6%81%E7%BC%BA%E5%B8%AD.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/uncategorized/CS0804n/git/" title="无题">无题</a><time datetime="2021-10-03T14:15:41.840Z" title="更新于 2021-10-03 22:15:41">2021-10-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ACM/Template/ACM/Template/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构"><img data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/Alcest_Kodama.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构"/></a><div class="content"><a class="title" href="/ACM/Template/ACM/Template/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a><time datetime="2021-10-03T13:54:43.806Z" title="更新于 2021-10-03 21:54:43">2021-10-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ACM/ACM/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" title="9月刷题记录"><img data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/%E7%A6%8F%E7%A6%84%E5%AF%BF_%E6%88%91%E7%94%A8%E4%BB%80%E4%B9%88%E6%8A%8A%E4%BD%A0%E7%95%99%E4%BD%8F.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="9月刷题记录"/></a><div class="content"><a class="title" href="/ACM/ACM/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" title="9月刷题记录">9月刷题记录</a><time datetime="2021-10-03T07:55:56.160Z" title="更新于 2021-10-03 15:55:56">2021-10-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ACM/Template/ACM/Template/DP/" title="DP"><img data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/Sebastian%20Plano_Impetus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DP"/></a><div class="content"><a class="title" href="/ACM/Template/ACM/Template/DP/" title="DP">DP</a><time datetime="2021-10-01T07:43:30.910Z" title="更新于 2021-10-01 15:43:30">2021-10-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ACM/Math/Number-Theory/ACM/Math/Number%20Theory/%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E5%92%8C%E5%90%8C%E4%BD%99%E5%BC%8F/" title="同余方程和同余式"><img data-lazy-src="https://ding-typora.oss-cn-beijing.aliyuncs.com/img/Sufjan%20Stevens_Carrie&amp;Lowell.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="同余方程和同余式"/></a><div class="content"><a class="title" href="/ACM/Math/Number-Theory/ACM/Math/Number%20Theory/%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E5%92%8C%E5%90%8C%E4%BD%99%E5%BC%8F/" title="同余方程和同余式">同余方程和同余式</a><time datetime="2021-10-01T07:43:23.899Z" title="更新于 2021-10-01 15:43:23">2021-10-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 By qwqbot</div><div class="footer_custom_text">福禄寿伴你左右</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', '', 'katex-wrap')
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
